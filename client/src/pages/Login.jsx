@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Row, Col, Form, Button } from 'react-bootstrap';
 import { gql, useLazyQuery } from '@apollo/client';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+import { useAuthDispatch } from '../context/auth'
 
 const LOGIN_USER = gql`
   query Login(
@@ -21,7 +23,6 @@ const LOGIN_USER = gql`
 `;
 
 export default function Login(props) {
-  const history = useHistory();
 
   const [variables, setVariables] = useState({
     username: '',
@@ -29,6 +30,7 @@ export default function Login(props) {
   });
 
   const [errors, setErrors] = useState({});
+  const dispatch = useAuthDispatch();
 
   const [loginUser, { loading, data, error }] = useLazyQuery(LOGIN_USER, {
     onError(err) {
@@ -36,7 +38,7 @@ export default function Login(props) {
       setErrors(err.graphQLErrors[0].extensions.errors);
     },
     onCompleted(data) {
-      localStorage.setItem('token', data.login.token);
+      dispatch({ type: 'LOGIN', payload: data.login })
       props.history.push('/');
     }
   });

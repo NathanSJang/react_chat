@@ -3,27 +3,34 @@ const { UserInputError, AuthenticationError } = require('apollo-server');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 
-const { User } = require('../models');
-const { JWT_SECRET } = require('../config/env.json');
+const { Message, User } = require('../../models');
+const { JWT_SECRET } = require('../../config/env.json');
 
 
 module.exports = {
   Query: {
-    getUsers: async (_, __, context) => {
+    getUsers: async (_, __, { user }) => {
       try {
-        let user
+        if(!user) throw new AuthenticationError('Unauthenticated');
 
-        if(context.req && context.req.headers.authorization) {
-          const token = context.req.headers.authorization.split('Bearer ')[1];
-          jwt.verify(token, JWT_SECRET, (err, decodedToken) => {
-            if(err) {
-              throw new AuthenticationError('Unanthenticated');
-            }
-            user = decodedToken;
-          })
-        }
-        const users = await User.findAll({
+        let users = await User.findAll({
+          attributes: ['username', 'imageUrl', 'createdAt'],
           where: { username: { [Op.ne]: user.username } }
+        });
+
+        const allUserMessage = await Message.findAll({
+          where: {
+            [Op.or]: [{ from: user.username }, { to: user.username }]
+          },
+          order: [['createdAt', 'DESC']]
+        });
+
+        users = users.map(otherUser => {
+          const latestMessage = allUserMessage.find(
+            m => m.from === otherUser.username || m.to === otherUser.username
+          );
+          otherUser.latestMessage = latestMessage;
+          return otherUser
         });
 
         return users;
@@ -56,7 +63,7 @@ module.exports = {
 
         if(!correctPassword) {
           errors.password = 'password is incorrect';
-          throw new AuthenticationError('password is incorrect', { errors })
+          throw new UserInputError('password is incorrect', { errors })
         }
 
         const token = jwt.sign({ username }, JWT_SECRET, {
@@ -119,5 +126,5 @@ module.exports = {
         throw new UserInputError("Bad Input", { errors });
       }
     }
-  }
+  },
 };
