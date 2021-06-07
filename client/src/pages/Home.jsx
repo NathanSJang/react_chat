@@ -45,7 +45,7 @@ export default function Home({ history }) {
 
 
   const { loading, data, error } = useQuery(GET_USERS);
-  const [getMessages, { loading: messagesLoading, data: messagesData }] = useLazyQuery(GET_MESSAGES)
+  const [ getMessages, { loading: messagesLoading, data: messagesData } ] = useLazyQuery(GET_MESSAGES)
 
   useEffect(() => {
     if(selectedUser) {
