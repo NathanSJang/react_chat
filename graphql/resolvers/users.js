@@ -30,7 +30,7 @@ module.exports = {
             m => m.from === otherUser.username || m.to === otherUser.username
           );
           otherUser.latestMessage = latestMessage;
-          return otherUser
+          return otherUser;
         });
 
         return users;
@@ -72,12 +72,11 @@ module.exports = {
 
         return {
           ...user.toJSON(),
-          createdAt: user.createdAt.toISOString(),
           token
-        }
+        };
       } catch (err) {
-        console.log(err)
-        throw err
+        console.log(err);
+        throw err;
       }
     }
   },

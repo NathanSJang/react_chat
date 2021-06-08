@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button } from 'react-bootstrap';
+import { Row, Col, Form, Button } from 'react-bootstrap';
 import { gql, useMutation } from '@apollo/client';
-import { useHistory, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const REGISTER_USER = gql`
   mutation register(
@@ -24,7 +24,6 @@ const REGISTER_USER = gql`
 `;
 
 export default function Register(props) {
-  const history = useHistory();
 
   const [variables, setVariables] = useState({
     email: '',
