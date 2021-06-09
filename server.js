@@ -1,4 +1,6 @@
 const { ApolloServer } = require('apollo-server');
+const path = require('path');
+
 
 require('dotenv').config();
 
@@ -16,7 +18,8 @@ const server = new ApolloServer({
   subscriptions: { path: '/' }
 });
 
-server.listen().then(({ url, subscriptionsUrl }) => {
+
+server.listen({ port: process.env.PORT || 4000 }).then(({ url, subscriptionsUrl }) => {
   console.log(`🚀 Server ready at ${url}`);
   console.log(`🚀 Subscription ready at ${subscriptionsUrl}`);
 
