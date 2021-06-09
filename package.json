@@ -6,7 +6,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js --ignore client/",
-    "start": "node server.js && cd client && npm start"
+    "start": "node server.js",
+    "test": "cd client && npm start"
   },
   "keywords": [],
   "author": "",
