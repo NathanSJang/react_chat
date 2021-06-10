@@ -1,13 +1,11 @@
 {
-  "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
   "name": "chat",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js --ignore client/",
-    "start": "node server.js",
-    "test": "cd client && npm start"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
