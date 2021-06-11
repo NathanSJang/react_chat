@@ -4,9 +4,9 @@ An Live chat app
 
 # Getting started
 Choose one of charicter or you can make your own
-username: john, pw: 123456
-username: jane, pw: 123456
-username: boss, pw: 123456
+- username: john, pw: 123456
+- username: jane, pw: 123456
+- username: boss, pw: 123456
 
 # Technologies Used:
 
