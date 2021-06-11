@@ -8,6 +8,8 @@ Choose one of charicter or you can make your own
 - username: jane, pw: 123456
 - username: boss, pw: 123456
 
+- [Visit Chat_Chat](http://nathan-react-chat.com/)
+
 # Technologies Used:
 
 - React
