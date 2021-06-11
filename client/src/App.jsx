@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ApolloProvider from './ApolloProvider';
 
 import './App.scss';
-import Home from './components/Home'
+import Home from './components/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 

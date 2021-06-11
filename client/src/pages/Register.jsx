@@ -36,7 +36,7 @@ export default function Register(props) {
 
   const [registerUser, { loading, data, error }] = useMutation(REGISTER_USER, {
     update(_, __) {
-      props.history.push('/login')
+      props.history.push('/login');
     },
     onError(err) {
       console.log(err.graphQLErrors[0].extensions.errors);
@@ -47,8 +47,8 @@ export default function Register(props) {
   const submitRegisterForm = (event) => {
     event.preventDefault();
 
-    registerUser({ variables })
-  }
+    registerUser({ variables });
+  };
 
   return (
     <Row className="bg-white py-5 justify-content-center">

@@ -12,33 +12,33 @@ if(token) {
   const expiresAt = new Date(decodedToken.exp * 1000)
 
   if(new Date() > expiresAt) {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
   } else {
-    user = decodedToken
+    user = decodedToken;
   }
-} else console.log('No token found')
+} else console.log('No token found');
 
 const authReducer = (state, action) => {
   switch (action.type) {
     case 'LOGIN':
-      localStorage.setItem('token', action.payload.token)
+      localStorage.setItem('token', action.payload.token);
       return {
         ...state,
         user: action.payload,
       }
     case 'LOGOUT':
-      localStorage.removeItem('token')
+      localStorage.removeItem('token');
       return {
         ...state,
         user: null,
       }
     default:
-      throw new Error(`Unknown action type: ${action.type}`)
+      throw new Error(`Unknown action type: ${action.type}`);
   }
 }
 
 export const AuthProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(authReducer, { user })
+  const [state, dispatch] = useReducer(authReducer, { user });
 
   return (
     <AuthDispatchContext.Provider value={dispatch}>
@@ -49,5 +49,5 @@ export const AuthProvider = ({ children }) => {
   )
 }
 
-export const useAuthState = () => useContext(AuthStateContext)
-export const useAuthDispatch = () => useContext(AuthDispatchContext)
+export const useAuthState = () => useContext(AuthStateContext);
+export const useAuthDispatch = () => useContext(AuthDispatchContext);

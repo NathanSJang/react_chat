@@ -5,34 +5,34 @@ const MessageDispatchContext = createContext();
 
 
 const messageReducer = (state, action) => {
-  let usersCopy, userIndex
-  const { username, message, messages, reaction } = action.payload
+  let usersCopy, userIndex;
+  const { username, message, messages, reaction } = action.payload;
   switch (action.type) {
       case 'SET_USERS' :
           return {
               ...state,
               users: action.payload
-          }
+          };
       case 'SET_USER_MESSAGES':
-        usersCopy = [...state.users]
-        userIndex = usersCopy.findIndex(u => u.username === username)
+        usersCopy = [...state.users];
+        userIndex = usersCopy.findIndex(u => u.username === username);
 
-        usersCopy[userIndex] = { ...usersCopy[userIndex], messages}
+        usersCopy[userIndex] = { ...usersCopy[userIndex], messages};
 
         return {
           ...state,
           users: usersCopy
-        }
+        };
       case 'SET_SELECTED_USER': 
           usersCopy = state.users.map(user => ({
             ...user,
             selected: user.username === action.payload
-          }))
+          }));
 
           return {
             ...state,
             users: usersCopy
-          }
+          };
 
       case 'ADD_MESSAGE':
         usersCopy = [...state.users];
@@ -85,10 +85,10 @@ const messageReducer = (state, action) => {
             messagesCopy[messageIndex] = {
               ...messagesCopy[messageIndex],
               reactions: reactionsCopy
-            }
+            };
             userCopy = {...userCopy, messages: messagesCopy }
             usersCopy[userIndex] = userCopy
-          }
+          };
 
           return {
             ...state,
@@ -96,12 +96,12 @@ const messageReducer = (state, action) => {
           };
 
     default:
-      throw new Error(`Unknown action type: ${action.type}`)
+      throw new Error(`Unknown action type: ${action.type}`);
   }
 }
 
 export const MessageProvider = ({ children }) => {
-  const [state, dispatch] = useReducer( messageReducer, { users: null })
+  const [state, dispatch] = useReducer( messageReducer, { users: null });
 
   return (
     <MessageDispatchContext.Provider value={dispatch}>
@@ -112,5 +112,5 @@ export const MessageProvider = ({ children }) => {
   )
 }
 
-export const useMessageState = () => useContext(MessageStateContext)
-export const useMessageDispatch = () => useContext(MessageDispatchContext)
+export const useMessageState = () => useContext(MessageStateContext);
+export const useMessageDispatch = () => useContext(MessageDispatchContext);

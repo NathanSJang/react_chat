@@ -41,7 +41,7 @@ module.exports = {
     },
     login: async (__, args) => {
       const { username, password } = args;
-      let errors = {}
+      let errors = {};
 
       try {
         if(username.trim() === '') errors.username = 'username must not be empty';
@@ -49,26 +49,26 @@ module.exports = {
         
         if(Object.keys(errors).length > 0) {
           throw new UserInputError('bad input', { errors });
-        }
+        };
         const user = await User.findOne({
           where: { username },
-        })
+        });
 
         if(!user) {
           errors.username = 'user not found';
           throw new UserInputError('user not found', { errors });
-        }
+        };
         
-        const correctPassword = await bcrypt.compare(password, user.password)
+        const correctPassword = await bcrypt.compare(password, user.password);
 
         if(!correctPassword) {
           errors.password = 'password is incorrect';
-          throw new UserInputError('password is incorrect', { errors })
-        }
+          throw new UserInputError('password is incorrect', { errors });
+        };
 
         const token = jwt.sign({ username }, process.env.JWT_SECRET, {
           expiresIn: 60 * 60,
-        })
+        });
 
         return {
           ...user.toJSON(),
@@ -85,7 +85,7 @@ module.exports = {
     // args from typeDefs
     register: async (parent, args, context, info) => {
       let { username, email, password, confirmPassword } = args;
-      let errors = {}
+      let errors = {};
 
       try {
         // TODO: validate input data
@@ -105,7 +105,7 @@ module.exports = {
 
         if(Object.keys(errors).length > 0) {
           throw errors;
-        }
+        };
 
         // Hash password
         password = await bcrypt.hash(password, 6);

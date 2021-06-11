@@ -1,7 +1,7 @@
 const userResolvers = require('./users');
 const messageResovlers = require('./messages');
 
-const { User, Message } = require('../../models')
+const { User, Message } = require('../../models');
 
 module.exports = {
   Message: {
@@ -27,4 +27,4 @@ module.exports = {
   Subscription: {
     ...messageResovlers.Subscription
   }
-}
+};

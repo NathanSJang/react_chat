@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Row, Col, Button, Image } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import { Row, Button, } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { gql, useSubscription} from '@apollo/client';
 
@@ -35,7 +35,7 @@ const NEW_REACTION = gql`
 
 
 
-export default function Home({ history }) {
+export default function Home() {
   const authDispatch = useAuthDispatch();
   const messageDispatch = useMessageDispatch();
 
@@ -49,7 +49,7 @@ export default function Home({ history }) {
     if(messageError) console.log(messageError);
     if(messageData) {
       const message = messageData.newMessage
-      const otherUser = user.username === message.to ? message.from : message.to
+      const otherUser = user.username === message.to ? message.from : message.to;
 
       messageDispatch({ 
         type: 'ADD_MESSAGE', 
@@ -58,15 +58,15 @@ export default function Home({ history }) {
           message,
       },
     })
-  }
-}, [messageData, messageError])
+  };
+}, [messageData, messageError]);
 
 // subscribe reactions
   useEffect(() => {
     if(reactionError) console.log(reactionError);
     if(reactionData) {
-      const reaction = reactionData.newReaction
-      const otherUser = user.username === reaction.message.to ? reaction.message.from : reaction.message.to
+      const reaction = reactionData.newReaction;
+      const otherUser = user.username === reaction.message.to ? reaction.message.from : reaction.message.to;
 
       messageDispatch({ 
         type: 'ADD_REACTION', 
@@ -75,13 +75,13 @@ export default function Home({ history }) {
           reaction,
       },
     })
-  }
-}, [reactionData, reactionError])
+  };
+}, [reactionData, reactionError]);
 
   const logout = () => {
     authDispatch({ type: 'LOGOUT' })
     window.location.href = '/login'
-  }
+  };
 
 
   return (
